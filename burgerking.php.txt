@@ -1,0 +1,71 @@
+<?php
+/* 
+   Burgerking sells three items: 
+   VegBurger which needs 2 breads & 1 veg pattice
+   NonVegBurger which needs 2 breads & 1 non-veg pattice
+   TikkiBurger which needs 2 breads & 1 tikki pattice
+
+   Given bread quantity, veg pattice quantity, non-veg pattice quantity, tikki pattice quantity & price of all 3 items
+
+   Print the total maximum possible profit by making all possible items based on bread availability 
+
+   Also, test for all inputs, we would change all the values while testing, the quantity values as well as price
+
+   And the program has to be optimal with respect to time & space complexity
+*/
+
+// Input quantities and prices
+$breads = 15;
+$vegPattice = 3;
+$nonVegPattice = 2;
+$TikkiPattice = 1;
+$priceVegBurger = 100;
+$priceNonVegBurger = 125;
+$priceTikkiBurger = 112;
+
+// Initialize max profit to 0
+$maxProfit = 0;
+
+/* 
+   In this question, we have to find out the max profit made by selling the burgers.
+   To make one burger, we need 2 breads and one pattice.
+   We have three types of burgers: 
+   1) VegBurger
+   2) NonVegBurger
+   3) TikkiBurger
+   We will make high-cost burgers first, and if there are any breads left, we will make VegBurger.
+*/
+
+// Calculate how many burgers can be made with the available breads
+$availableBurgers = floor($breads / 2);
+
+// Check if NonVegBurger can be made and update maxProfit accordingly
+if ($nonVegPattice > 0 && $nonVegPattice <= $availableBurgers) {
+    $maxProfit += $priceNonVegBurger * $nonVegPattice;
+    $availableBurgers -= $nonVegPattice;
+} else {
+    $maxProfit += $priceNonVegBurger * $availableBurgers;
+    $availableBurgers = 0;
+}
+
+// Check if TikkiBurger can be made and update maxProfit accordingly
+if ($TikkiPattice > 0 && $TikkiPattice <= $availableBurgers) {
+    $maxProfit += $priceTikkiBurger * $TikkiPattice;
+    $availableBurgers -= $TikkiPattice;
+} else {
+    $maxProfit += $priceTikkiBurger * $availableBurgers;
+    $availableBurgers = 0;
+}
+
+// Check if VegBurger can be made and update maxProfit accordingly
+if ($vegPattice > 0 && $vegPattice <= $availableBurgers) {
+    $maxProfit += $priceVegBurger * $vegPattice;
+    $availableBurgers -= $vegPattice;
+} else {
+    $maxProfit += $priceVegBurger * $availableBurgers;
+    $availableBurgers = 0;
+}
+
+// Here we are printing the max profit made by selling Burgers
+echo $maxProfit;
+?>
