@@ -1,0 +1,16 @@
+<?php
+$server = 2;
+$load = [10, 60, 50, 15, 20];
+
+foreach ($load as $minuteLoad) {
+    if ($minuteLoad <= 50) {
+        // If load is less than 50%, reduce servers to N/2
+        $server = ceil($server / 2);
+    } else {
+        // If load is 50% or more, increase servers to 2N + 1
+        $server = 2 * $server + 1;
+    }
+}
+
+print($server);
+?>
